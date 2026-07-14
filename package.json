@@ -7,9 +7,17 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mobile:sync": "vite build && cap sync",
+    "mobile:android": "vite build && cap sync android && cap open android",
+    "mobile:ios": "vite build && cap sync ios && cap open ios"
   },
   "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
+    "@capacitor/ios": "^8.4.1",
+    "@capacitor/status-bar": "^8.0.2",
     "gsap": "^3.12.5"
   },
   "devDependencies": {

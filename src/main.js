@@ -1,4 +1,14 @@
 import gsap from "gsap";
+import { Capacitor } from "@capacitor/core";
+
+// Sur iOS/Android : plein écran, la WebView passe sous la barre d'état
+// (les encoches sont compensées en CSS via env(safe-area-inset-*)).
+if (Capacitor.isNativePlatform()) {
+  import("@capacitor/status-bar").then(({ StatusBar, Style }) => {
+    StatusBar.setOverlaysWebView({ overlay: true }).catch(() => {});
+    StatusBar.setStyle({ style: Style.Dark }).catch(() => {});
+  });
+}
 
 // Découpe le titre en lettres animables individuellement.
 function splitTitle(el, text) {
@@ -25,9 +35,10 @@ mm.add(
   {
     reduceMotion: "(prefers-reduced-motion: reduce)",
     motionOK: "(prefers-reduced-motion: no-preference)",
+    hoverOK: "(hover: hover) and (pointer: fine)",
   },
   (context) => {
-    const { reduceMotion } = context.conditions;
+    const { reduceMotion, hoverOK } = context.conditions;
 
     if (reduceMotion) {
       gsap.set(
@@ -102,7 +113,7 @@ mm.add(
       });
     });
 
-    // Légère mise en avant des cartes au survol.
+    // Mise en avant des cartes : survol à la souris, pression du doigt au tactile.
     const cards = gsap.utils.toArray(".card");
     const cleanups = cards.map((card) => {
       const lift = gsap.to(card, {
@@ -112,13 +123,33 @@ mm.add(
         ease: "power2.out",
         paused: true,
       });
-      const onEnter = () => lift.play();
-      const onLeave = () => lift.reverse();
-      card.addEventListener("mouseenter", onEnter);
-      card.addEventListener("mouseleave", onLeave);
+      const press = gsap.to(card, {
+        scale: 0.97,
+        duration: 0.15,
+        ease: "power2.out",
+        paused: true,
+      });
+
+      if (hoverOK) {
+        const onEnter = () => lift.play();
+        const onLeave = () => lift.reverse();
+        card.addEventListener("mouseenter", onEnter);
+        card.addEventListener("mouseleave", onLeave);
+        return () => {
+          card.removeEventListener("mouseenter", onEnter);
+          card.removeEventListener("mouseleave", onLeave);
+        };
+      }
+
+      const onDown = () => press.play();
+      const onUp = () => press.reverse();
+      card.addEventListener("touchstart", onDown, { passive: true });
+      card.addEventListener("touchend", onUp, { passive: true });
+      card.addEventListener("touchcancel", onUp, { passive: true });
       return () => {
-        card.removeEventListener("mouseenter", onEnter);
-        card.removeEventListener("mouseleave", onLeave);
+        card.removeEventListener("touchstart", onDown);
+        card.removeEventListener("touchend", onUp);
+        card.removeEventListener("touchcancel", onUp);
       };
     });
 
