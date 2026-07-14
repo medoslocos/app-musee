@@ -125,6 +125,32 @@ button:focus-visible {
   line-height: 1;
 }
 
+/* Bouton retour (page œuvre) : même gabarit que le bouton taille */
+.btn-retour {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 3rem; /* 60 px au niveau normal */
+  padding: 0.4em 1.1em;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.btn-retour:hover {
+  background: #2a2620;
+}
+
+.btn-retour-icone {
+  font-size: 1.3em;
+  line-height: 1;
+  color: var(--accent);
+}
+
 /* ---------- Hero ---------- */
 
 .hero {
@@ -306,6 +332,7 @@ button:focus-visible {
      même quand le texte est réglé sur « très grand » */
   grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
   gap: 1.5rem;
+  justify-items: center;
 }
 
 .card {
@@ -326,25 +353,158 @@ button:focus-visible {
   font-size: 1rem;
 }
 
-.card-art {
-  height: 8rem;
+/* Carte d'œuvre (générée depuis les données) : toute la carte est un lien */
+.card-oeuvre {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  max-width: 24rem;
+}
+
+.card-photo {
+  width: 100%;
+  height: 14rem;
+  object-fit: cover;
+  object-position: top;
   border-radius: 10px;
+  display: block;
 }
 
-.art-1 {
-  background: linear-gradient(135deg, #7a4a2b, #d4a349);
+.card-accroche {
+  font-style: italic;
+  margin-top: 0.3rem;
 }
 
-.art-2 {
-  background: linear-gradient(135deg, #2b4a7a, #49b8d4);
+.card-cta {
+  display: inline-block;
+  margin-top: 0.8rem;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.05rem;
 }
 
-.art-3 {
-  background: linear-gradient(135deg, #4a2b7a, #d449a3);
+
+
+
+
+/* ---------- Page œuvre ---------- */
+
+.oeuvre {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1.2rem, 4vw, 2.5rem) 4rem;
 }
 
-.art-4 {
-  background: linear-gradient(135deg, #3d3d3d, #b5ac9c);
+.oeuvre-titre {
+  font-size: clamp(2rem, 7vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 0.4rem;
+}
+
+.oeuvre-date {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 1.4rem;
+}
+
+.oeuvre-figure {
+  margin: 0 0 1.6rem;
+}
+
+.oeuvre-visuel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: #000;
+}
+
+.oeuvre-visuel img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Calque SVG de reconstitution : exactement superposé à la photo */
+.calque-reconstitution {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Barre de balayage lumineux pendant l'animation */
+.scan {
+  position: absolute;
+  top: 0;
+  left: -5%;
+  width: 110%;
+  height: 14%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    #ffe9b055 35%,
+    #ffe9b0aa 50%,
+    #ffe9b055 65%,
+    transparent
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+.oeuvre-legende {
+  min-height: 1.5em;
+  margin-top: 0.9rem;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.oeuvre-credit {
+  margin-top: 0.4rem;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.oeuvre-description {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  margin-bottom: 2.2rem;
+}
+
+.oeuvre-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  max-width: 26rem;
+  margin: 0 auto;
+}
+
+/* Bascule Aujourd'hui / À l'origine : l'état actif est doré */
+.bascule {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.bascule .btn {
+  flex: 1 1 10rem;
+}
+
+.btn-bascule {
+  font-family: inherit;
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--ink);
+  border: 3px solid var(--accent);
+}
+
+.btn-bascule[aria-pressed="true"] {
+  background: var(--accent-bg);
+  color: var(--accent-ink);
 }
 
 /* ---------- Infos pratiques : liste très lisible ---------- */

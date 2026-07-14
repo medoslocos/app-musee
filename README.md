@@ -28,6 +28,26 @@ Configuration mobile :
 - **zoom accidentel désactivé** : `user-scalable=no` + `maximum-scale=1` dans le viewport, `touch-action` et `-webkit-tap-highlight-color` en CSS ;
 - **animations adaptées au tactile** : le survol des cartes (souris) est remplacé par un retour de pression au doigt, via `gsap.matchMedia()` et la condition `(hover: hover) and (pointer: fine)`.
 
+## Moteur générique / contenu
+
+Le contenu (nom du musée, œuvres) vit dans **`src/data/musee.js`** : c'est le seul
+fichier à remplacer pour changer de musée. Chaque œuvre y définit son titre, sa date,
+sa description (français simple), sa photo (dossier `public/images/`, licence libre)
+et, en option, une **reconstitution** : un calque SVG superposé à la photo, animé par
+le moteur selon deux conventions de classes (`.trace` = contours dessinés
+progressivement, `.apparition` = éléments en fondu, `.lueur-pulse` = halos qui
+« respirent »).
+
+Pages :
+
+- `index.html` — accueil ; les cartes d'œuvres sont générées depuis les données ;
+- `oeuvre.html?id=<id>` — écran de détail : grande image, titre, date, description,
+  bouton « ✨ Voir la reconstitution » puis bascule « Aujourd'hui / À l'origine »
+  (animation GSAP ~2,6 s : la photo s'assombrit, un balayage lumineux passe, les
+  parties manquantes se dessinent en surimpression dorée façon hologramme).
+
+Œuvre de démonstration : la Vénus de Milo (photo Shonagon, Wikimedia Commons, CC0).
+
 ## Stack
 
 - [Vite](https://vitejs.dev) — outillage et serveur de dev

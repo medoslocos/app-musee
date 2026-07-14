@@ -1,56 +1,28 @@
 import gsap from "gsap";
-import { Capacitor } from "@capacitor/core";
+import { initNatif, initTailleTexte } from "./commun.js";
+import { oeuvres } from "./data/musee.js";
 
-// Sur iOS/Android : plein écran, la WebView passe sous la barre d'état
-// (les encoches sont compensées en CSS via env(safe-area-inset-*)).
-if (Capacitor.isNativePlatform()) {
-  import("@capacitor/status-bar").then(({ StatusBar, Style }) => {
-    StatusBar.setOverlaysWebView({ overlay: true }).catch(() => {});
-    StatusBar.setStyle({ style: Style.Dark }).catch(() => {});
-  });
-}
+initNatif();
+initTailleTexte();
 
 // ---------------------------------------------------------------------------
-// Taille du texte : 3 niveaux, mémorisés pendant la session.
-// Le niveau est posé sur <html data-texte="...">, le CSS fait le reste
-// (tout est en rem, donc textes ET boutons grandissent ensemble).
+// Cartes d'œuvres : générées depuis src/data/musee.js (moteur générique).
 // ---------------------------------------------------------------------------
 
-const NIVEAUX = [
-  { id: "normal", libelle: "Normal" },
-  { id: "grand", libelle: "Grand" },
-  { id: "tres-grand", libelle: "Très grand" },
-];
-const CLE_SESSION = "musee-taille-texte";
-
-const btnTaille = document.getElementById("btn-taille-texte");
-const libelleTaille = btnTaille.querySelector(".btn-taille-libelle");
-
-function appliquerTaille(id) {
-  const niveau = NIVEAUX.find((n) => n.id === id) ?? NIVEAUX[0];
-  if (niveau.id === "normal") {
-    delete document.documentElement.dataset.texte;
-  } else {
-    document.documentElement.dataset.texte = niveau.id;
-  }
-  libelleTaille.textContent = `Texte : ${niveau.libelle}`;
-  const suivant = NIVEAUX[(NIVEAUX.indexOf(niveau) + 1) % NIVEAUX.length];
-  btnTaille.setAttribute(
-    "aria-label",
-    `Taille du texte : ${niveau.libelle}. Appuyer pour passer à : ${suivant.libelle}.`
-  );
-  sessionStorage.setItem(CLE_SESSION, niveau.id);
-  return niveau;
+const listeOeuvres = document.getElementById("liste-oeuvres");
+for (const oeuvre of oeuvres) {
+  const carte = document.createElement("a");
+  carte.className = "card card-oeuvre";
+  carte.href = `./oeuvre.html?id=${encodeURIComponent(oeuvre.id)}`;
+  carte.innerHTML = `
+    <img class="card-photo" src="${oeuvre.image}" alt="" />
+    <h3>${oeuvre.titre}</h3>
+    <p>${oeuvre.categorie} — ${oeuvre.date}</p>
+    <p class="card-accroche">${oeuvre.accroche}</p>
+    <span class="card-cta">Découvrir l'œuvre&nbsp;→</span>
+  `;
+  listeOeuvres.appendChild(carte);
 }
-
-let tailleActuelle = appliquerTaille(
-  sessionStorage.getItem(CLE_SESSION) ?? "normal"
-);
-
-btnTaille.addEventListener("click", () => {
-  const index = NIVEAUX.indexOf(tailleActuelle);
-  tailleActuelle = appliquerTaille(NIVEAUX[(index + 1) % NIVEAUX.length].id);
-});
 
 // ---------------------------------------------------------------------------
 // Titre animé lettre par lettre. Chaque mot est enveloppé dans un span
@@ -123,7 +95,7 @@ mm.add(
       )
       .from(".hero-subtitle", { autoAlpha: 0, y: 30 }, "-=0.5")
       .from(
-        ".btn",
+        ".hero-actions .btn",
         { autoAlpha: 0, y: 20, scale: 0.9, stagger: 0.12, ease: "back.out(2)" },
         "-=0.4"
       )
