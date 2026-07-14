@@ -1,0 +1,269 @@
+:root {
+  --bg: #0e0d0b;
+  --surface: #171512;
+  --ink: #f4efe6;
+  --ink-muted: #b5ac9c;
+  --accent: #d4a349;
+  --accent-soft: #8a6a2f;
+  font-family: "Georgia", "Times New Roman", serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
+  position: sticky;
+  top: 0;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.logo-dot {
+  color: var(--accent);
+}
+
+.nav {
+  display: flex;
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+
+.nav a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+
+.nav a:hover {
+  color: var(--accent);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  min-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+}
+
+.hero-kicker {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 9vw, 6.5rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title .char {
+  display: inline-block;
+  will-change: transform;
+}
+
+.hero-title .word-space {
+  display: inline-block;
+  width: 0.35em;
+}
+
+.hero-subtitle {
+  max-width: 38rem;
+  color: var(--ink-muted);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #1a1408;
+}
+
+.btn-primary:hover {
+  background: #e6b95e;
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  border: 1px solid var(--accent-soft);
+  color: var(--ink);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ---------- Formes décoratives animées ---------- */
+
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  opacity: 0.5;
+}
+
+.shape-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #d4a34955, transparent 70%);
+  border: 1px solid #d4a34966;
+  top: 14%;
+  left: 8%;
+}
+
+.shape-square {
+  width: 90px;
+  height: 90px;
+  border: 1px solid #b5ac9c55;
+  bottom: 18%;
+  left: 16%;
+}
+
+.shape-triangle {
+  width: 0;
+  height: 0;
+  border-left: 55px solid transparent;
+  border-right: 55px solid transparent;
+  border-bottom: 95px solid #8a6a2f44;
+  top: 20%;
+  right: 10%;
+}
+
+.shape-ring {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 1px dashed #d4a34944;
+  bottom: 8%;
+  right: 6%;
+}
+
+/* ---------- Galerie ---------- */
+
+.gallery {
+  padding: 5rem clamp(1.5rem, 5vw, 4rem) 6rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.gallery-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid #2a2620;
+  border-radius: 14px;
+  padding: 1.25rem;
+  will-change: transform;
+}
+
+.card h3 {
+  margin: 0.9rem 0 0.35rem;
+  font-size: 1.15rem;
+}
+
+.card p {
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+}
+
+.card-art {
+  height: 140px;
+  border-radius: 10px;
+}
+
+.art-1 {
+  background: linear-gradient(135deg, #7a4a2b, #d4a349);
+}
+
+.art-2 {
+  background: linear-gradient(135deg, #2b4a7a, #49b8d4);
+}
+
+.art-3 {
+  background: linear-gradient(135deg, #4a2b7a, #d449a3);
+}
+
+.art-4 {
+  background: linear-gradient(135deg, #3d3d3d, #b5ac9c);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid #2a2620;
+  padding: 2rem;
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
