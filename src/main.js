@@ -10,24 +10,78 @@ if (Capacitor.isNativePlatform()) {
   });
 }
 
-// Découpe le titre en lettres animables individuellement.
+// ---------------------------------------------------------------------------
+// Taille du texte : 3 niveaux, mémorisés pendant la session.
+// Le niveau est posé sur <html data-texte="...">, le CSS fait le reste
+// (tout est en rem, donc textes ET boutons grandissent ensemble).
+// ---------------------------------------------------------------------------
+
+const NIVEAUX = [
+  { id: "normal", libelle: "Normal" },
+  { id: "grand", libelle: "Grand" },
+  { id: "tres-grand", libelle: "Très grand" },
+];
+const CLE_SESSION = "musee-taille-texte";
+
+const btnTaille = document.getElementById("btn-taille-texte");
+const libelleTaille = btnTaille.querySelector(".btn-taille-libelle");
+
+function appliquerTaille(id) {
+  const niveau = NIVEAUX.find((n) => n.id === id) ?? NIVEAUX[0];
+  if (niveau.id === "normal") {
+    delete document.documentElement.dataset.texte;
+  } else {
+    document.documentElement.dataset.texte = niveau.id;
+  }
+  libelleTaille.textContent = `Texte : ${niveau.libelle}`;
+  const suivant = NIVEAUX[(NIVEAUX.indexOf(niveau) + 1) % NIVEAUX.length];
+  btnTaille.setAttribute(
+    "aria-label",
+    `Taille du texte : ${niveau.libelle}. Appuyer pour passer à : ${suivant.libelle}.`
+  );
+  sessionStorage.setItem(CLE_SESSION, niveau.id);
+  return niveau;
+}
+
+let tailleActuelle = appliquerTaille(
+  sessionStorage.getItem(CLE_SESSION) ?? "normal"
+);
+
+btnTaille.addEventListener("click", () => {
+  const index = NIVEAUX.indexOf(tailleActuelle);
+  tailleActuelle = appliquerTaille(NIVEAUX[(index + 1) % NIVEAUX.length].id);
+});
+
+// ---------------------------------------------------------------------------
+// Titre animé lettre par lettre. Chaque mot est enveloppé dans un span
+// insécable pour qu'aucun mot ne soit coupé en deux, même en très grand.
+// ---------------------------------------------------------------------------
+
 function splitTitle(el, text) {
   el.textContent = "";
-  for (const char of text) {
-    const span = document.createElement("span");
-    if (char === " ") {
-      span.className = "word-space";
-      span.textContent = " ";
-    } else {
+  const words = text.split(" ");
+  words.forEach((word, i) => {
+    const wordSpan = document.createElement("span");
+    wordSpan.className = "word";
+    for (const char of word) {
+      const span = document.createElement("span");
       span.className = "char";
       span.textContent = char;
+      wordSpan.appendChild(span);
     }
-    el.appendChild(span);
-  }
+    el.appendChild(wordSpan);
+    if (i < words.length - 1) {
+      el.appendChild(document.createTextNode(" "));
+    }
+  });
 }
 
 const title = document.querySelector(".hero-title");
 splitTitle(title, "Musée Interactif");
+
+// ---------------------------------------------------------------------------
+// Animations GSAP
+// ---------------------------------------------------------------------------
 
 const mm = gsap.matchMedia();
 

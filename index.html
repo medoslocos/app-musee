@@ -13,12 +13,10 @@
   <body>
     <header class="site-header">
       <span class="logo">Musée<span class="logo-dot">.</span></span>
-      <nav class="nav">
-        <a href="#collections">Collections</a>
-        <a href="#expositions">Expositions</a>
-        <a href="#visite">Visite</a>
-        <a href="#infos">Infos pratiques</a>
-      </nav>
+      <button id="btn-taille-texte" class="btn-taille" type="button">
+        <span class="btn-taille-icone" aria-hidden="true">Aa</span>
+        <span class="btn-taille-libelle">Texte&nbsp;: Normal</span>
+      </button>
     </header>
 
     <main>
@@ -35,17 +33,23 @@
           <!-- Les lettres sont générées en JS pour l'animation en cascade -->
         </h1>
         <p class="hero-subtitle">
-          Explorez l'art autrement&nbsp;: des collections vivantes,
-          des expositions immersives et des parcours interactifs.
+          Explorez l'art autrement&nbsp;: des collections vivantes
+          et des parcours simples à suivre.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#collections">Découvrir les collections</a>
-          <a class="btn btn-ghost" href="#visite">Préparer ma visite</a>
+          <a class="btn btn-primary" href="#collections">
+            <span class="btn-icone" aria-hidden="true">🖼️</span>
+            <span>Voir les collections</span>
+          </a>
+          <a class="btn btn-ghost" href="#infos">
+            <span class="btn-icone" aria-hidden="true">🎟️</span>
+            <span>Préparer ma visite</span>
+          </a>
         </div>
       </section>
 
       <section class="gallery" id="collections">
-        <h2 class="gallery-title">Collections en vedette</h2>
+        <h2 class="section-title">Collections en vedette</h2>
         <div class="cards">
           <article class="card">
             <div class="card-art art-1"></div>
@@ -69,10 +73,32 @@
           </article>
         </div>
       </section>
+
+      <section class="infos" id="infos">
+        <h2 class="section-title">Infos pratiques</h2>
+        <ul class="infos-liste">
+          <li>
+            <span class="infos-icone" aria-hidden="true">🕙</span>
+            <span><strong>Horaires&nbsp;:</strong> du mardi au dimanche, de 10&nbsp;h à 19&nbsp;h</span>
+          </li>
+          <li>
+            <span class="infos-icone" aria-hidden="true">📍</span>
+            <span><strong>Adresse&nbsp;:</strong> 12&nbsp;place des Arts, 75000&nbsp;Paris</span>
+          </li>
+          <li>
+            <span class="infos-icone" aria-hidden="true">📞</span>
+            <span><strong>Téléphone&nbsp;:</strong> 01&nbsp;23&nbsp;45&nbsp;67&nbsp;89</span>
+          </li>
+          <li>
+            <span class="infos-icone" aria-hidden="true">♿</span>
+            <span><strong>Accès&nbsp;:</strong> le musée est entièrement accessible, ascenseurs à chaque étage</span>
+          </li>
+        </ul>
+      </section>
     </main>
 
     <footer class="site-footer">
-      <p>Musée Interactif — ouvert du mardi au dimanche, 10h–19h</p>
+      <p>Musée Interactif — entrée gratuite le premier dimanche du mois</p>
     </footer>
 
     <script type="module" src="/src/main.js"></script>
