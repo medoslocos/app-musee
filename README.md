@@ -40,13 +40,18 @@ progressivement, `.apparition` = éléments en fondu, `.lueur-pulse` = halos qui
 
 Pages :
 
-- `index.html` — accueil ; les cartes d'œuvres sont générées depuis les données ;
+- `index.html` — accueil ; montre les œuvres marquées `vedette: true` et un bouton
+  « Voir toutes les œuvres » ;
+- `collections.html` — liste complète des œuvres du fichier de données ;
 - `oeuvre.html?id=<id>` — écran de détail : grande image, titre, date, description,
   bouton « ✨ Voir la reconstitution » puis bascule « Aujourd'hui / À l'origine »
   (animation GSAP ~2,6 s : la photo s'assombrit, un balayage lumineux passe, les
   parties manquantes se dessinent en surimpression dorée façon hologramme).
 
-Œuvre de démonstration : la Vénus de Milo (photo Shonagon, Wikimedia Commons, CC0).
+Œuvres de démonstration (toutes les photos : Wikimedia Commons, licence CC0) :
+Vénus de Milo et Victoire de Samothrace (photos Shonagon, musée du Louvre — les
+deux avec reconstitution animée), amphore panathénaïque, tête colossale de
+Constantin et bacinet médiéval (photos The Metropolitan Museum of Art, New York).
 
 ## Stack
 

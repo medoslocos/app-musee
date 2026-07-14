@@ -6,6 +6,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         accueil: fileURLToPath(new URL("./index.html", import.meta.url)),
+        collections: fileURLToPath(new URL("./collections.html", import.meta.url)),
         oeuvre: fileURLToPath(new URL("./oeuvre.html", import.meta.url)),
       },
     },

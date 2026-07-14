@@ -1,27 +1,19 @@
 import gsap from "gsap";
 import { initNatif, initTailleTexte } from "./commun.js";
+import { creerCarteOeuvre } from "./cartes.js";
 import { oeuvres } from "./data/musee.js";
 
 initNatif();
 initTailleTexte();
 
 // ---------------------------------------------------------------------------
-// Cartes d'œuvres : générées depuis src/data/musee.js (moteur générique).
+// Œuvres en vedette : l'accueil ne montre que les œuvres marquées `vedette`,
+// la page Collections liste tout.
 // ---------------------------------------------------------------------------
 
 const listeOeuvres = document.getElementById("liste-oeuvres");
-for (const oeuvre of oeuvres) {
-  const carte = document.createElement("a");
-  carte.className = "card card-oeuvre";
-  carte.href = `./oeuvre.html?id=${encodeURIComponent(oeuvre.id)}`;
-  carte.innerHTML = `
-    <img class="card-photo" src="${oeuvre.image}" alt="" />
-    <h3>${oeuvre.titre}</h3>
-    <p>${oeuvre.categorie} — ${oeuvre.date}</p>
-    <p class="card-accroche">${oeuvre.accroche}</p>
-    <span class="card-cta">Découvrir l'œuvre&nbsp;→</span>
-  `;
-  listeOeuvres.appendChild(carte);
+for (const oeuvre of oeuvres.filter((o) => o.vedette)) {
+  listeOeuvres.appendChild(creerCarteOeuvre(oeuvre));
 }
 
 // ---------------------------------------------------------------------------

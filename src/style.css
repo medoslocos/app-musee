@@ -326,6 +326,18 @@ button:focus-visible {
   scroll-margin-top: 5.5rem;
 }
 
+.gallery-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.collections-intro {
+  text-align: center;
+  color: var(--ink-muted);
+  margin: -1rem 0 2rem;
+}
+
 .cards {
   display: grid;
   /* min(16rem, 100%) : la colonne ne dépasse jamais la largeur de l'écran,

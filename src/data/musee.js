@@ -5,16 +5,19 @@
  * Chaque œuvre :
  * - id           : identifiant utilisé dans l'URL (oeuvre.html?id=...)
  * - titre, date  : affichés tels quels
- * - accroche     : phrase courte pour la carte d'accueil
+ * - accroche     : phrase courte pour la carte
  * - description  : 3-4 phrases en français simple
  * - image        : chemin relatif à la racine du site (dossier public/)
  * - credit       : mention de la photo (licence libre)
+ * - vedette      : true → l'œuvre apparaît sur la page d'accueil
+ *                  (toutes les œuvres apparaissent sur la page Collections)
  * - reconstitution (facultatif) :
  *   - legende : phrase affichée sous l'image quand la reconstitution est visible
  *   - svg     : calque SVG superposé à la photo (même viewBox que l'image).
  *     Conventions d'animation du moteur :
- *       .trace      → contours dessinés progressivement (stroke)
- *       .apparition → éléments qui apparaissent en fondu
+ *       .trace       → contours dessinés progressivement (stroke)
+ *       .apparition  → éléments qui apparaissent en fondu
+ *       .lueur-pulse → halos qui « respirent » une fois la reconstitution visible
  */
 
 export const musee = {
@@ -39,6 +42,7 @@ export const oeuvres = [
       "Statue en marbre blanc d'une femme drapée à partir des hanches, sans bras, sur fond de marbre sombre",
     credit:
       "Photo : Shonagon, musée du Louvre — Wikimedia Commons, licence CC0 (domaine public)",
+    vedette: true,
     reconstitution: {
       legende:
         "Reconstitution possible : la déesse tenait sans doute une pomme, souvenir du jugement de Pâris.",
@@ -81,5 +85,137 @@ export const oeuvres = [
   </g>
 </svg>`,
     },
+  },
+
+  {
+    id: "victoire-de-samothrace",
+    titre: "Victoire de Samothrace",
+    categorie: "Antiquités grecques",
+    date: "Vers 190 avant J.-C.",
+    accroche: "La déesse ailée qui a perdu sa tête",
+    description:
+      "Cette grande statue représente Niké, la déesse grecque de la victoire. " +
+      "Elle se pose sur l'avant d'un navire de pierre, les ailes encore ouvertes. " +
+      "Elle a été retrouvée en 1863 sur l'île de Samothrace, brisée en de nombreux morceaux. " +
+      "Sa tête et ses bras n'ont jamais été retrouvés.",
+    image: "images/victoire-de-samothrace.jpg",
+    imageAlt:
+      "Statue en marbre d'une femme ailée sans tête ni bras, drapée, posée sur une proue de navire en pierre",
+    credit:
+      "Photo : Shonagon, musée du Louvre — Wikimedia Commons, licence CC0 (domaine public)",
+    vedette: true,
+    reconstitution: {
+      legende:
+        "Reconstitution possible : la tête tournée vers l'avant, le bras droit levé pour annoncer la victoire.",
+      svg: `
+<svg viewBox="0 0 1280 1544" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="or-hologramme" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe9b0"/>
+      <stop offset="1" stop-color="#dfa63d"/>
+    </linearGradient>
+    <filter id="lueur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <!-- La tête : profil tourné vers l'avant (la gauche de l'image), chignon grec -->
+  <g>
+    <path class="trace lueur-pulse" pathLength="1"
+      d="M 688 156 C 667 156 654 174 654 196 C 654 220 668 236 688 236 C 708 236 722 220 722 196 C 722 174 709 156 688 156 Z"
+      fill="none" stroke="#e8b95c" stroke-width="20" stroke-linecap="round" opacity="0.35" filter="url(#lueur)"/>
+    <path class="trace" pathLength="1"
+      d="M 688 156 C 667 156 654 174 654 196 C 654 220 668 236 688 236 C 708 236 722 220 722 196 C 722 174 709 156 688 156 Z"
+      fill="none" stroke="url(#or-hologramme)" stroke-width="9" stroke-linecap="round" opacity="0.65"/>
+    <path class="apparition" pathLength="1"
+      d="M 688 156 C 667 156 654 174 654 196 C 654 220 668 236 688 236 C 708 236 722 220 722 196 C 722 174 709 156 688 156 Z"
+      fill="#e8b95c" opacity="0.18"/>
+    <!-- Chignon et nuque -->
+    <circle class="apparition" cx="720" cy="212" r="13" fill="#e8b95c" opacity="0.45"/>
+    <path class="apparition" pathLength="1" d="M 664 168 Q 686 156 710 166" fill="none"
+      stroke="#ffe9b0" stroke-width="4" stroke-dasharray="10 8" opacity="0.9"/>
+  </g>
+
+  <!-- Bras droit levé au-dessus de l'aile : il annonce la victoire -->
+  <g>
+    <path class="trace lueur-pulse" pathLength="1" d="M 732 298 C 778 258 802 208 804 152 Q 804 120 786 84"
+      fill="none" stroke="#e8b95c" stroke-width="40" stroke-linecap="round" opacity="0.35" filter="url(#lueur)"/>
+    <path class="trace" pathLength="1" d="M 732 298 C 778 258 802 208 804 152 Q 804 120 786 84"
+      fill="none" stroke="url(#or-hologramme)" stroke-width="27" stroke-linecap="round" opacity="0.55"/>
+    <path class="apparition" pathLength="1" d="M 732 298 C 778 258 802 208 804 152 Q 804 120 786 84"
+      fill="none" stroke="#ffe9b0" stroke-width="3" stroke-dasharray="12 9" opacity="0.9"/>
+    <!-- Main ouverte vers le ciel -->
+    <ellipse class="apparition" cx="780" cy="64" rx="18" ry="14" fill="#e8b95c" opacity="0.5"/>
+  </g>
+
+  <!-- Bras gauche : le long du corps, vers le drapé de la hanche -->
+  <g>
+    <path class="trace lueur-pulse" pathLength="1" d="M 600 330 C 568 390 556 450 566 505 Q 572 532 592 552"
+      fill="none" stroke="#e8b95c" stroke-width="38" stroke-linecap="round" opacity="0.35" filter="url(#lueur)"/>
+    <path class="trace" pathLength="1" d="M 600 330 C 568 390 556 450 566 505 Q 572 532 592 552"
+      fill="none" stroke="url(#or-hologramme)" stroke-width="26" stroke-linecap="round" opacity="0.55"/>
+    <path class="apparition" pathLength="1" d="M 600 330 C 568 390 556 450 566 505 Q 572 532 592 552"
+      fill="none" stroke="#ffe9b0" stroke-width="3" stroke-dasharray="12 9" opacity="0.9"/>
+    <ellipse class="apparition" cx="598" cy="562" rx="17" ry="13" fill="#e8b95c" opacity="0.5"/>
+  </g>
+</svg>`,
+    },
+  },
+
+  {
+    id: "amphore-panathenaique",
+    titre: "Amphore panathénaïque",
+    categorie: "Céramique grecque",
+    date: "Vers 530 avant J.-C.",
+    accroche: "Le trophée des jeux d'Athènes",
+    description:
+      "Cette grande jarre en terre cuite était un prix de concours. " +
+      "Elle était remplie d'huile d'olive précieuse et offerte aux vainqueurs des jeux d'Athènes. " +
+      "Sur la panse, la déesse Athéna est peinte en noir, prête au combat. " +
+      "L'autre face montre l'épreuve gagnée : une course à pied.",
+    image: "images/amphore-panathenaique.jpg",
+    imageAlt:
+      "Grande amphore en terre cuite orangée à figures noires : Athéna casquée tient une lance et un bouclier",
+    credit:
+      "Photo : The Metropolitan Museum of Art, New York — Wikimedia Commons, licence CC0 (domaine public)",
+    vedette: true,
+  },
+
+  {
+    id: "tete-de-constantin",
+    titre: "Tête colossale de Constantin",
+    categorie: "Art romain",
+    date: "Vers 325 après J.-C.",
+    accroche: "Le regard d'un empereur, sans son corps",
+    description:
+      "Cette tête en marbre représente Constantin, un grand empereur romain. " +
+      "Elle mesure presque un mètre : la statue entière était haute comme deux personnes. " +
+      "Le corps a disparu depuis des siècles, et le nez comme le menton sont abîmés. " +
+      "Les grands yeux levés vers le ciel voulaient montrer un chef guidé par le divin.",
+    image: "images/tete-constantin.jpg",
+    imageAlt:
+      "Tête colossale en marbre blanc d'un homme aux grands yeux, nez cassé, posée sur un socle",
+    credit:
+      "Photo : The Metropolitan Museum of Art, New York — Wikimedia Commons, licence CC0 (domaine public)",
+    vedette: false,
+  },
+
+  {
+    id: "bacinet-medieval",
+    titre: "Bacinet à visière",
+    categorie: "Moyen Âge",
+    date: "Vers 1375–1425",
+    accroche: "Le casque des chevaliers de la guerre de Cent Ans",
+    description:
+      "Ce casque de fer protégeait la tête d'un chevalier. " +
+      "Sa visière pointue, appelée « bec de passereau », faisait glisser les coups d'épée et les flèches. " +
+      "Le chevalier pouvait la relever pour respirer entre deux combats. " +
+      "Des casques comme celui-ci étaient portés en France pendant la guerre de Cent Ans.",
+    image: "images/bacinet-medieval.jpg",
+    imageAlt:
+      "Casque médiéval en fer poli à visière pointue percée de trous, sur fond gris",
+    credit:
+      "Photo : The Metropolitan Museum of Art, New York — Wikimedia Commons, licence CC0 (domaine public)",
+    vedette: false,
   },
 ];

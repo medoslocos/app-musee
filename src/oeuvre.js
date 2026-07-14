@@ -36,6 +36,20 @@ const prefereMoinsDeMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 );
 
+// Le bouton retour ramène à la page d'où l'on vient (accueil ou Collections).
+document.querySelector(".btn-retour").addEventListener("click", (e) => {
+  let memeOrigine = false;
+  try {
+    memeOrigine = new URL(document.referrer).origin === location.origin;
+  } catch {
+    // pas de referrer exploitable : on suit le lien normal
+  }
+  if (memeOrigine && history.length > 1) {
+    e.preventDefault();
+    history.back();
+  }
+});
+
 // ---------------------------------------------------------------------------
 // Reconstitution : calque SVG « hologramme » superposé à la photo.
 // Conventions du moteur : .trace = contours dessinés, .apparition = fondus,
