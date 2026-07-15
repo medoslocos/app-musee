@@ -519,6 +519,77 @@ button:focus-visible {
   color: var(--accent-ink);
 }
 
+/* Curseur avant/après : grande poignée facile à attraper */
+.comparateur {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.comparateur-label {
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 1rem;
+}
+
+.comparateur-extremites {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.curseur {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3rem; /* large zone tactile (60 px) */
+  background: transparent;
+  cursor: pointer;
+}
+
+.curseur::-webkit-slider-runnable-track {
+  height: 0.7rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3a352b, var(--accent));
+  border: 1px solid var(--border);
+}
+
+.curseur::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-top: calc((0.7rem - 2.3rem) / 2);
+  border-radius: 50%;
+  background: var(--accent-bg);
+  border: 3px solid #1b1305;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.curseur::-moz-range-track {
+  height: 0.7rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3a352b, var(--accent));
+  border: 1px solid var(--border);
+}
+
+.curseur::-moz-range-thumb {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  border: 3px solid #1b1305;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.curseur:focus-visible {
+  outline: 4px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
 /* ---------- Infos pratiques : liste très lisible ---------- */
 
 .infos {

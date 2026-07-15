@@ -75,6 +75,9 @@ export const oeuvres = [
       "Photo : Shonagon, musée du Louvre — Wikimedia Commons, licence CC0 (domaine public)",
     vedette: true,
     reconstitution: {
+      // Active la reconstitution « matière » : assemblage + solidification
+      // en marbre, particules dorées, curseur avant/après.
+      effetMatiere: true,
       legende:
         "Reconstitution possible : la déesse tenait sans doute une pomme, souvenir du jugement de Pâris.",
       svg: `

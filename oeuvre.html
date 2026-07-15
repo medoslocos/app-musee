@@ -56,6 +56,27 @@
             <span>À l'origine</span>
           </button>
         </div>
+
+        <!-- Curseur avant/après (affiché avec la reconstitution « matière ») -->
+        <div class="comparateur" id="comparateur" hidden>
+          <label class="comparateur-label" for="curseur-comparaison">
+            Comparer avec le doigt&nbsp;: avant ↔ après
+          </label>
+          <input
+            type="range"
+            class="curseur"
+            id="curseur-comparaison"
+            min="0"
+            max="100"
+            step="1"
+            value="0"
+            aria-label="Curseur de comparaison entre l'œuvre aujourd'hui et sa reconstitution"
+          />
+          <div class="comparateur-extremites" aria-hidden="true">
+            <span>🏛️ Aujourd'hui</span>
+            <span>À l'origine ✨</span>
+          </div>
+        </div>
       </div>
     </main>
 
