@@ -8,9 +8,9 @@
     />
     <title>Œuvre — Musée Interactif</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>" />
-    <script type="module" crossorigin src="./assets/oeuvre-zcCP3M2q.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/musee-C_i8iPuU.js">
-    <link rel="stylesheet" crossorigin href="./assets/musee-5yIYK0bl.css">
+    <script type="module" crossorigin src="./assets/oeuvre-BIKVCFld.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/musee-QaTuCFJg.js">
+    <link rel="stylesheet" crossorigin href="./assets/musee-DN66nUUz.css">
   </head>
   <body>
     <header class="site-header">
@@ -57,6 +57,27 @@
             <span class="btn-icone" aria-hidden="true">✨</span>
             <span>À l'origine</span>
           </button>
+        </div>
+
+        <!-- Curseur avant/après (affiché avec la reconstitution « matière ») -->
+        <div class="comparateur" id="comparateur" hidden>
+          <label class="comparateur-label" for="curseur-comparaison">
+            Comparer avec le doigt&nbsp;: avant ↔ après
+          </label>
+          <input
+            type="range"
+            class="curseur"
+            id="curseur-comparaison"
+            min="0"
+            max="100"
+            step="1"
+            value="0"
+            aria-label="Curseur de comparaison entre l'œuvre aujourd'hui et sa reconstitution"
+          />
+          <div class="comparateur-extremites" aria-hidden="true">
+            <span>🏛️ Aujourd'hui</span>
+            <span>À l'origine ✨</span>
+          </div>
         </div>
       </div>
     </main>
