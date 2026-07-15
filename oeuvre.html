@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Œuvre — Musée Interactif</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>" />
+    <script type="module" crossorigin src="./assets/oeuvre-zcCP3M2q.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/musee-C_i8iPuU.js">
+    <link rel="stylesheet" crossorigin href="./assets/musee-5yIYK0bl.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="btn-retour" href="./index.html">
+        <span class="btn-retour-icone" aria-hidden="true">←</span>
+        <span>Retour</span>
+      </a>
+      <button id="btn-taille-texte" class="btn-taille" type="button">
+        <span class="btn-taille-icone" aria-hidden="true">Aa</span>
+        <span class="btn-taille-libelle">Texte&nbsp;: Normal</span>
+      </button>
+    </header>
+
+    <main class="oeuvre">
+      <h1 class="oeuvre-titre" id="oeuvre-titre">…</h1>
+      <p class="oeuvre-date" id="oeuvre-date"></p>
+
+      <figure class="oeuvre-figure">
+        <div class="oeuvre-visuel" id="oeuvre-visuel">
+          <img id="oeuvre-image" src="" alt="" />
+          <!-- Le calque SVG de reconstitution (fourni par les données) est injecté ici -->
+          <div class="scan" id="scan" aria-hidden="true"></div>
+        </div>
+        <figcaption>
+          <p class="oeuvre-legende" id="oeuvre-legende" aria-live="polite"></p>
+          <p class="oeuvre-credit" id="oeuvre-credit"></p>
+        </figcaption>
+      </figure>
+
+      <p class="oeuvre-description" id="oeuvre-description"></p>
+
+      <div class="oeuvre-actions">
+        <button id="btn-reconstitution" class="btn btn-primary" type="button">
+          <span class="btn-icone" aria-hidden="true">✨</span>
+          <span>Voir la reconstitution</span>
+        </button>
+
+        <div class="bascule" id="bascule" role="group" aria-label="Choisir l'état de l'œuvre" hidden>
+          <button id="btn-aujourdhui" class="btn btn-bascule" type="button" aria-pressed="true">
+            <span class="btn-icone" aria-hidden="true">🏛️</span>
+            <span>Aujourd'hui</span>
+          </button>
+          <button id="btn-origine" class="btn btn-bascule" type="button" aria-pressed="false">
+            <span class="btn-icone" aria-hidden="true">✨</span>
+            <span>À l'origine</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Musée Interactif — entrée gratuite le premier dimanche du mois</p>
+    </footer>
+
+  </body>
+</html>

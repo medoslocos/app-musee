@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Musée Interactif — Accueil</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>" />
+    <script type="module" crossorigin src="./assets/accueil-q4GnV9X3.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/musee-C_i8iPuU.js">
+    <link rel="modulepreload" crossorigin href="./assets/cartes-8mcE2pY5.js">
+    <link rel="stylesheet" crossorigin href="./assets/musee-5yIYK0bl.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <span class="logo">Musée<span class="logo-dot">.</span></span>
+      <button id="btn-taille-texte" class="btn-taille" type="button">
+        <span class="btn-taille-icone" aria-hidden="true">Aa</span>
+        <span class="btn-taille-libelle">Texte&nbsp;: Normal</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-shapes" aria-hidden="true">
+          <div class="shape shape-circle"></div>
+          <div class="shape shape-square"></div>
+          <div class="shape shape-triangle"></div>
+          <div class="shape shape-ring"></div>
+        </div>
+
+        <p class="hero-kicker">Bienvenue au</p>
+        <h1 class="hero-title" aria-label="Musée Interactif">
+          <!-- Les lettres sont générées en JS pour l'animation en cascade -->
+        </h1>
+        <p class="hero-subtitle">
+          Explorez l'art autrement&nbsp;: des collections vivantes
+          et des parcours simples à suivre.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#collections">
+            <span class="btn-icone" aria-hidden="true">🖼️</span>
+            <span>Voir les collections</span>
+          </a>
+          <a class="btn btn-ghost" href="./visite.html">
+            <span class="btn-icone" aria-hidden="true">🎟️</span>
+            <span>Préparer ma visite</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="gallery" id="collections">
+        <h2 class="section-title">Œuvres en vedette</h2>
+        <!-- Cartes générées depuis src/data/musee.js (œuvres marquées `vedette`) -->
+        <div class="cards" id="liste-oeuvres"></div>
+        <div class="gallery-actions">
+          <a class="btn btn-primary" href="./collections.html">
+            <span class="btn-icone" aria-hidden="true">📚</span>
+            <span>Voir toutes les œuvres</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>Musée Interactif — entrée gratuite le premier dimanche du mois</p>
+      <p class="mention-discrete" id="mention-reassurance"></p>
+    </footer>
+
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Préparer ma visite — Musée Interactif</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>" />
+    <script type="module" crossorigin src="./assets/visite-CzMzFk_k.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/musee-C_i8iPuU.js">
+    <link rel="stylesheet" crossorigin href="./assets/musee-5yIYK0bl.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="btn-retour" href="./index.html">
+        <span class="btn-retour-icone" aria-hidden="true">←</span>
+        <span>Accueil</span>
+      </a>
+      <button id="btn-taille-texte" class="btn-taille" type="button">
+        <span class="btn-taille-icone" aria-hidden="true">Aa</span>
+        <span class="btn-taille-libelle">Texte&nbsp;: Normal</span>
+      </button>
+    </header>
+
+    <main class="gallery visite">
+      <h1 class="section-title">Préparer ma visite</h1>
+      <p class="collections-intro">
+        Tout ce qu'il faut savoir avant de venir nous voir.
+      </p>
+      <!-- Liste générée depuis src/data/musee.js -->
+      <ul class="infos-liste" id="infos-liste"></ul>
+
+      <div class="gallery-actions">
+        <a class="btn btn-primary" id="btn-appeler" href="tel:+33123456789">
+          <span class="btn-icone" aria-hidden="true">📞</span>
+          <span>Appeler le musée</span>
+        </a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Musée Interactif — entrée gratuite le premier dimanche du mois</p>
+    </footer>
+
+  </body>
+</html>
