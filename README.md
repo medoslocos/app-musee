@@ -52,8 +52,14 @@ Pages :
   direct (`musee.telephoneLien`) ;
 - `oeuvre.html?id=<id>` — écran de détail : grande image, titre, date, description,
   bouton « ✨ Voir la reconstitution » puis bascule « Aujourd'hui / À l'origine »
-  (animation GSAP ~2,6 s : la photo s'assombrit, un balayage lumineux passe, les
-  parties manquantes se dessinent en surimpression dorée façon hologramme).
+  et curseur avant/après. Trois expériences de reconstitution, choisies par les
+  données : **photo** (`reconstitution.imageComplete` : transition vers une photo
+  de l'œuvre complète, révélée par un masque animé des épaules vers les mains —
+  repli automatique si le fichier est absent), **matière** (`effetMatiere` :
+  assemblage hologramme puis solidification en marbre SVG, particules dorées)
+  et **hologramme** (par défaut : traits dorés dessinés).
+  La photo reconstituée doit avoir exactement les mêmes dimensions et cadrage
+  que l'originale (superposition au pixel près), en JPEG sRGB.
 
 Œuvres de démonstration (toutes les photos : Wikimedia Commons, licence CC0) :
 Vénus de Milo et Victoire de Samothrace (photos Shonagon, musée du Louvre — les

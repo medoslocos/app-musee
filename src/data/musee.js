@@ -18,6 +18,16 @@
  *       .trace       → contours dessinés progressivement (stroke)
  *       .apparition  → éléments qui apparaissent en fondu
  *       .lueur-pulse → halos qui « respirent » une fois la reconstitution visible
+ *   - effetMatiere : true → expérience « matière » (assemblage + marbre
+ *     solidifié + particules + curseur) au lieu du simple hologramme
+ *   - imageComplete : chemin d'une PHOTO de l'œuvre reconstituée.
+ *     Si le fichier existe, le moteur montre une transition photo → photo
+ *     (masque animé le long des membres, des épaules vers les mains).
+ *     Si le fichier est absent, repli automatique sur matière/hologramme.
+ *     Spécifications de la photo : mêmes dimensions et cadrage EXACTS que
+ *     l'image originale (superposition au pixel près), JPEG sRGB, seules
+ *     les parties reconstituées diffèrent ; les zones révélées suivent
+ *     les tracés .trace du calque SVG.
  */
 
 export const musee = {
@@ -78,6 +88,10 @@ export const oeuvres = [
       // Active la reconstitution « matière » : assemblage + solidification
       // en marbre, particules dorées, curseur avant/après.
       effetMatiere: true,
+      // Photo de la statue avec ses bras : déposer le fichier dans
+      // public/images/ pour activer la transition photo → photo
+      // (repli automatique sur l'effet matière tant qu'il est absent).
+      imageComplete: "images/venus-reconstituee.jpg",
       legende:
         "Reconstitution possible : la déesse tenait sans doute une pomme, souvenir du jugement de Pâris.",
       svg: `
