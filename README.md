@@ -21,6 +21,11 @@ npm run mobile:android  # build + sync + ouvrir dans Android Studio
 npm run mobile:ios      # build + sync + ouvrir dans Xcode (macOS requis)
 ```
 
+Icône et écran de lancement : fronton de musée doré sur fond anthracite. Les
+sources sont dans `assets/` (icône 1024, splash 2732) et toutes les déclinaisons
+natives (mipmap Android, icône adaptative, splashs portrait/paysage, AppIcon et
+Splash iOS) sont générées dans `android/` et `ios/`.
+
 Configuration mobile :
 
 - `capacitor.config.json` — appId `com.medoslocos.appmusee`, fond sombre natif assorti au thème ;
@@ -40,9 +45,11 @@ progressivement, `.apparition` = éléments en fondu, `.lueur-pulse` = halos qui
 
 Pages :
 
-- `index.html` — accueil ; montre les œuvres marquées `vedette: true` et un bouton
-  « Voir toutes les œuvres » ;
+- `index.html` — accueil ; montre les œuvres marquées `vedette: true`, un bouton
+  « Voir toutes les œuvres » et la mention de réassurance (`musee.reassurance`) ;
 - `collections.html` — liste complète des œuvres du fichier de données ;
+- `visite.html` — infos pratiques (`musee.infosPratiques`) et bouton d'appel
+  direct (`musee.telephoneLien`) ;
 - `oeuvre.html?id=<id>` — écran de détail : grande image, titre, date, description,
   bouton « ✨ Voir la reconstitution » puis bascule « Aujourd'hui / À l'origine »
   (animation GSAP ~2,6 s : la photo s'assombrit, un balayage lumineux passe, les

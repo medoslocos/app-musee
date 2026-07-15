@@ -1,10 +1,15 @@
 import gsap from "gsap";
 import { initNatif, initTailleTexte } from "./commun.js";
 import { creerCarteOeuvre } from "./cartes.js";
-import { oeuvres } from "./data/musee.js";
+import { musee, oeuvres } from "./data/musee.js";
 
 initNatif();
 initTailleTexte();
+
+// Mention de réassurance (configurable dans src/data/musee.js).
+if (musee.reassurance) {
+  document.getElementById("mention-reassurance").textContent = musee.reassurance;
+}
 
 // ---------------------------------------------------------------------------
 // Œuvres en vedette : l'accueil ne montre que les œuvres marquées `vedette`,

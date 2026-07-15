@@ -559,3 +559,14 @@ button:focus-visible {
   color: var(--ink-muted);
   font-size: 1rem;
 }
+
+/* Mention discrète mais lisible (réassurance, configurable dans les données) */
+.mention-discrete {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.mention-discrete:empty {
+  display: none;
+}

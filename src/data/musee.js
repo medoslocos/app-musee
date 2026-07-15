@@ -23,6 +23,37 @@
 export const musee = {
   nom: "Musée Interactif",
   slogan: "Explorez l'art autrement",
+  // Petite mention de réassurance affichée en bas de l'accueil.
+  reassurance: "Données hébergées en France 🇫🇷",
+  // Numéro au format international pour le lien d'appel direct.
+  telephoneLien: "+33123456789",
+  infosPratiques: [
+    {
+      icone: "🕙",
+      libelle: "Horaires",
+      texte: "Du mardi au dimanche, de 10 h à 19 h",
+    },
+    {
+      icone: "📍",
+      libelle: "Adresse",
+      texte: "12 place des Arts, 75000 Paris",
+    },
+    {
+      icone: "📞",
+      libelle: "Téléphone",
+      texte: "01 23 45 67 89",
+    },
+    {
+      icone: "♿",
+      libelle: "Accès",
+      texte: "Le musée est entièrement accessible, ascenseurs à chaque étage",
+    },
+    {
+      icone: "🎟️",
+      libelle: "Tarifs",
+      texte: "Entrée gratuite le premier dimanche du mois",
+    },
+  ],
 };
 
 export const oeuvres = [
