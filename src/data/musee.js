@@ -20,6 +20,9 @@
  *       .lueur-pulse → halos qui « respirent » une fois la reconstitution visible
  *   - effetMatiere : true → expérience « matière » (assemblage + marbre
  *     solidifié + particules + curseur) au lieu du simple hologramme
+ *   - reconstitutionPrompt : description (en anglais, pour les modèles
+ *     d'inpainting) des parties à générer — consommée par
+ *     scripts/generer-reconstitution.mjs, jamais affichée aux visiteurs.
  *   - imageComplete : chemin d'une PHOTO de l'œuvre reconstituée.
  *     Si le fichier existe, le moteur montre une transition photo → photo
  *     (masque animé le long des membres, des épaules vers les mains).
@@ -92,6 +95,12 @@ export const oeuvres = [
       // public/images/ pour activer la transition photo → photo
       // (repli automatique sur l'effet matière tant qu'il est absent).
       imageComplete: "images/venus-reconstituee.jpg",
+      reconstitutionPrompt:
+        "Restore the two missing arms of this ancient Greek marble statue of Aphrodite. " +
+        "Her right arm reaches down across the body toward the drapery on her left hip; " +
+        "her left arm is raised, the hand holding a small apple. " +
+        "Same weathered white Parian marble as the torso, same museum lighting and grain, " +
+        "seamless joins at the shoulder stumps, photorealistic, nothing else changed.",
       legende:
         "Reconstitution possible : la déesse tenait sans doute une pomme, souvenir du jugement de Pâris.",
       svg: `
@@ -153,6 +162,15 @@ export const oeuvres = [
       "Photo : Shonagon, musée du Louvre — Wikimedia Commons, licence CC0 (domaine public)",
     vedette: true,
     reconstitution: {
+      // La transition photo s'activera automatiquement quand l'image
+      // approuvée sera déposée dans public/images/.
+      imageComplete: "images/victoire-reconstituee.jpg",
+      reconstitutionPrompt:
+        "Restore the missing head and both arms of this winged ancient Greek marble statue " +
+        "of Nike standing on a stone ship prow. Head facing forward with a classical Greek " +
+        "chignon hairstyle; right arm raised high in triumph with an open hand; left arm " +
+        "lowered along the drapery. Same weathered marble as the body, same museum lighting " +
+        "and grain, seamless joins, photorealistic, nothing else changed.",
       legende:
         "Reconstitution possible : la tête tournée vers l'avant, le bras droit levé pour annoncer la victoire.",
       svg: `

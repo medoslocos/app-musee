@@ -66,6 +66,34 @@ Vénus de Milo et Victoire de Samothrace (photos Shonagon, musée du Louvre — 
 deux avec reconstitution animée), amphore panathénaïque, tête colossale de
 Constantin et bacinet médiéval (photos The Metropolitan Museum of Art, New York).
 
+## Pipeline de reconstitution photoréaliste
+
+Objectif : générer les photos d'œuvres reconstituées **sans retouche manuelle
+par œuvre**. Deux scripts sans dépendance (Node ≥ 20) :
+
+```bash
+npm run reconstitutions:generer   # génère 2-3 variantes par œuvre dans a-valider/
+npm run reconstitutions:valider   # interface de validation sur http://localhost:4600
+```
+
+Le générateur lit les œuvres ayant `reconstitutionPrompt` + `imageComplete`
+dans `src/data/musee.js`, **fabrique automatiquement le masque d'inpainting**
+depuis les couloirs SVG des données (tracés `.trace` + extrémités), appelle le
+fournisseur, vérifie chaque sortie (JPEG sRGB, dimensions identiques à
+l'original) et dépose originale + masque + variantes + manifest dans
+`a-valider/<id>/`. L'interface de validation les compare côte à côte ; un clic
+sur « Approuver » copie la variante vers `public/images/` — ce qui active
+automatiquement la transition photo dans l'app (repli hologramme/matière sinon).
+
+Fournisseurs (`RECON_FOURNISSEUR` ou `--fournisseur`, secrets dans `.env`
+non versionné) :
+
+| Fournisseur | Variable(s) | Notes |
+|---|---|---|
+| `bfl` | `BFL_API_KEY` | FLUX.1 Fill, API Black Forest Labs (Allemagne, UE) — recommandé |
+| `endpoint` | `RECON_ENDPOINT` (+ `RECON_API_KEY`) | serveur d'inpainting auto-hébergé (ex. SDXL sur Scaleway/OVH 🇫🇷) — contrat : POST JSON `{image, mask, prompt, seed}` en base64 → JPEG |
+| `simulation` | — | sans API : copies de l'original pour tester la mécanique |
+
 ## Stack
 
 - [Vite](https://vitejs.dev) — outillage et serveur de dev
