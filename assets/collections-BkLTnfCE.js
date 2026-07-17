@@ -1,1 +1,0 @@
-import{i as t,a as o,o as r,g as a}from"./musee-OklmW_Us.js";import{c as i}from"./cartes-8mcE2pY5.js";t();o();const s=document.getElementById("liste-oeuvres");for(const e of r)s.appendChild(i(e));window.matchMedia("(prefers-reduced-motion: reduce)").matches||a.from(".card",{autoAlpha:0,y:50,duration:.7,stagger:.1,ease:"power3.out"});
