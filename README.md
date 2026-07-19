@@ -37,6 +37,6 @@ npm run typecheck  # TypeScript strict
 ## État d'avancement
 
 - ✅ F1 — Estimation métal : saisie poids/titre, cours avec cache et mode hors-ligne, marge par métal (% ou €/g), ticket de résultat.
-- ⬜ F2 — Photo & assistance IA (edge function serveur, prompt versionné dans `/prompts`).
+- ✅ F2 — Photo & assistance IA : caméra + galerie, carte d'analyse avec badges de confiance, alerte valeur, suggestion de titre par poinçon, edge function `analyse-bijou` (prompt versionné dans `/prompts`).
 - ⬜ F3 — Reçu PDF & livre de police (SQLite local-first, numérotation infalsifiable).
 - ⬜ F4 — Historique & tableau de bord.

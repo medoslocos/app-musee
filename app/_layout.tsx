@@ -37,6 +37,15 @@ export default function DispositionRacine(): React.JSX.Element | null {
         <Stack.Screen name="index" options={{ title: 'Nouvelle estimation' }} />
         <Stack.Screen name="resultat" options={{ title: 'Estimation', headerBackTitle: 'Saisie' }} />
         <Stack.Screen name="reglages" options={{ title: 'Réglages', presentation: 'modal' }} />
+        <Stack.Screen
+          name="analyse"
+          options={{
+            title: 'Analyser en photo',
+            headerStyle: { backgroundColor: couleurs.noirEncre },
+            headerTintColor: couleurs.blancCraie,
+            headerTitleStyle: { fontFamily: polices.corpsSemiBold, color: couleurs.blancCraie },
+          }}
+        />
       </Stack>
     </>
   );
