@@ -61,3 +61,16 @@ const formatGrammes = new Intl.NumberFormat('fr-FR', {
 export function formaterMilligrammes(milligrammes: number): string {
   return `${formatGrammes.format(milligrammes / 1000)} g`;
 }
+
+/**
+ * 12400 mg → « 12.4 » : forme canonique du poids légal stocké en base
+ * (point décimal, sans séparateur de milliers, sans dépendre d'une locale).
+ */
+export function grammesCanoniques(milligrammes: number): string {
+  if (!Number.isSafeInteger(milligrammes) || milligrammes < 0) {
+    throw new Error(`Poids invalide : ${milligrammes} mg`);
+  }
+  const entier = Math.floor(milligrammes / 1000);
+  const fraction = String(milligrammes % 1000).padStart(3, '0').replace(/0+$/, '');
+  return fraction === '' ? String(entier) : `${entier}.${fraction}`;
+}

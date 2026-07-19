@@ -10,7 +10,7 @@ import type { BaseSql, Hacheur } from './base-sql';
 import type { Chiffreur, IdentiteVendeur } from './chiffrement';
 import { chiffrerIdentite, dechiffrerIdentite } from './chiffrement';
 import { EMPREINTE_RACINE, SCHEMA_SQL } from './schema-sql';
-import { formaterMilligrammes } from '../domaine/monnaie';
+import { grammesCanoniques } from '../domaine/monnaie';
 
 export type StatutEstimation = 'estime' | 'rachete' | 'refuse';
 
@@ -53,10 +53,7 @@ export interface Dependances {
   genererId: () => string;
 }
 
-function grammesDepuisMilligrammes(milligrammes: number): string {
-  // « 12,4 g » → « 12,4 » : valeur légale stockée en décimal string.
-  return formaterMilligrammes(milligrammes).replace(/ g$/, '');
-}
+
 
 export class Depot {
   constructor(private readonly dependances: Dependances) {}
@@ -77,7 +74,7 @@ export class Depot {
       [
         id,
         this.dependances.horloge(),
-        grammesDepuisMilligrammes(resultat.poidsMilligrammes),
+        grammesCanoniques(resultat.poidsMilligrammes),
         resultat.titre.code,
         resultat.titre.metal,
         resultat.coursCentimesParGramme,
