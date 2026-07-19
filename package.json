@@ -1,28 +1,39 @@
 {
-  "name": "app-musee",
-  "private": true,
+  "name": "gemestim",
   "version": "0.1.0",
-  "type": "module",
-  "description": "Application web interactive de musée",
+  "main": "expo-router/entry",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "mobile:sync": "vite build && cap sync",
-    "mobile:android": "vite build && cap sync android && cap open android",
-    "mobile:ios": "vite build && cap sync ios && cap open ios",
-    "reconstitutions:generer": "node scripts/generer-reconstitution.mjs",
-    "reconstitutions:valider": "node scripts/valider-reconstitutions.mjs"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@capacitor/android": "^8.4.1",
-    "@capacitor/cli": "^8.4.1",
-    "@capacitor/core": "^8.4.1",
-    "@capacitor/ios": "^8.4.1",
-    "@capacitor/status-bar": "^8.0.2",
-    "gsap": "^3.12.5"
+    "@expo-google-fonts/fraunces": "^0.4.1",
+    "@expo-google-fonts/inter": "^0.4.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "expo": "~57.0.7",
+    "expo-constants": "~57.0.6",
+    "expo-font": "~57.0.1",
+    "expo-linking": "~57.0.3",
+    "expo-router": "~57.0.7",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-native-web": "^0.21.2",
+    "zod": "^3.24.0",
+    "zustand": "^5.0.0"
   },
   "devDependencies": {
-    "vite": "^6.0.0"
-  }
+    "@types/react": "~19.2.2",
+    "typescript": "~6.0.3",
+    "vitest": "^3.2.7"
+  },
+  "private": true
 }

@@ -1,118 +1,42 @@
-# Musée Interactif
+# GemEstim
 
-Application de musée interactive — web, iOS et Android (via [Capacitor](https://capacitorjs.com)), avec une page d'accueil animée en [GSAP](https://gsap.com).
+App d'estimation assistée pour bijoutiers — rachat d'or et de bijoux d'occasion.
+La vision produit, les règles métier et la direction artistique sont dans [CLAUDE.md](CLAUDE.md), source de vérité du projet.
 
-## Démarrage (web)
+## Démarrer
 
 ```bash
 npm install
-npm run dev      # serveur de développement (Vite)
-npm run build    # build de production dans dist/
-npm run preview  # prévisualiser le build
+npm start          # Expo (iOS, Android, web)
 ```
 
-## Mobile (Capacitor)
-
-Le même code web tourne dans les apps natives. Les projets natifs sont dans `android/` et `ios/`.
+Pour le cours des métaux en temps réel, créer un fichier `.env` :
 
 ```bash
-npm run mobile:sync     # build web + synchronisation vers android/ et ios/
-npm run mobile:android  # build + sync + ouvrir dans Android Studio
-npm run mobile:ios      # build + sync + ouvrir dans Xcode (macOS requis)
+EXPO_PUBLIC_METALS_DEV_API_KEY=votre-cle-metals-dev
 ```
 
-Icône et écran de lancement : fronton de musée doré sur fond anthracite. Les
-sources sont dans `assets/` (icône 1024, splash 2732) et toutes les déclinaisons
-natives (mipmap Android, icône adaptative, splashs portrait/paysage, AppIcon et
-Splash iOS) sont générées dans `android/` et `ios/`.
+Sans clé, l'app affiche une erreur explicite à l'estimation et fonctionne dès qu'un cours a été mis en cache (repli hors-ligne sur le dernier cours connu, daté).
 
-Configuration mobile :
-
-- `capacitor.config.json` — appId `com.medoslocos.appmusee`, fond sombre natif assorti au thème ;
-- **plein écran** : la barre d'état passe en overlay (`@capacitor/status-bar`) et les encoches sont compensées en CSS via `env(safe-area-inset-*)` (`viewport-fit=cover`) ;
-- **zoom accidentel désactivé** : `user-scalable=no` + `maximum-scale=1` dans le viewport, `touch-action` et `-webkit-tap-highlight-color` en CSS ;
-- **animations adaptées au tactile** : le survol des cartes (souris) est remplacé par un retour de pression au doigt, via `gsap.matchMedia()` et la condition `(hover: hover) and (pointer: fine)`.
-
-## Moteur générique / contenu
-
-Le contenu (nom du musée, œuvres) vit dans **`src/data/musee.js`** : c'est le seul
-fichier à remplacer pour changer de musée. Chaque œuvre y définit son titre, sa date,
-sa description (français simple), sa photo (dossier `public/images/`, licence libre)
-et, en option, une **reconstitution** : un calque SVG superposé à la photo, animé par
-le moteur selon deux conventions de classes (`.trace` = contours dessinés
-progressivement, `.apparition` = éléments en fondu, `.lueur-pulse` = halos qui
-« respirent »).
-
-Pages :
-
-- `index.html` — accueil ; montre les œuvres marquées `vedette: true`, un bouton
-  « Voir toutes les œuvres » et la mention de réassurance (`musee.reassurance`) ;
-- `collections.html` — liste complète des œuvres du fichier de données ;
-- `visite.html` — infos pratiques (`musee.infosPratiques`) et bouton d'appel
-  direct (`musee.telephoneLien`) ;
-- `oeuvre.html?id=<id>` — écran de détail : grande image, titre, date, description,
-  bouton « ✨ Voir la reconstitution » puis bascule « Aujourd'hui / À l'origine »
-  et curseur avant/après. Trois expériences de reconstitution, choisies par les
-  données : **photo** (`reconstitution.imageComplete` : transition vers une photo
-  de l'œuvre complète, révélée par un masque animé des épaules vers les mains —
-  repli automatique si le fichier est absent), **matière** (`effetMatiere` :
-  assemblage hologramme puis solidification en marbre SVG, particules dorées)
-  et **hologramme** (par défaut : traits dorés dessinés).
-  La photo reconstituée doit avoir exactement les mêmes dimensions et cadrage
-  que l'originale (superposition au pixel près), en JPEG sRGB.
-
-Œuvres de démonstration (toutes les photos : Wikimedia Commons, licence CC0) :
-Vénus de Milo et Victoire de Samothrace (photos Shonagon, musée du Louvre — les
-deux avec reconstitution animée), amphore panathénaïque, tête colossale de
-Constantin et bacinet médiéval (photos The Metropolitan Museum of Art, New York).
-
-## Pipeline de reconstitution photoréaliste
-
-Objectif : générer les photos d'œuvres reconstituées **sans retouche manuelle
-par œuvre**. Deux scripts sans dépendance (Node ≥ 20) :
+## Vérifier
 
 ```bash
-npm run reconstitutions:generer   # génère 2-3 variantes par œuvre dans a-valider/
-npm run reconstitutions:valider   # interface de validation sur http://localhost:4600
+npm test           # tests vitest (logique de calcul couverte à 100 %)
+npm run typecheck  # TypeScript strict
 ```
 
-Le générateur lit les œuvres ayant `reconstitutionPrompt` + `imageComplete`
-dans `src/data/musee.js`, **fabrique automatiquement le masque d'inpainting**
-depuis les couloirs SVG des données (tracés `.trace` + extrémités), appelle le
-fournisseur, vérifie chaque sortie (JPEG sRGB, dimensions identiques à
-l'original) et dépose originale + masque + variantes + manifest dans
-`a-valider/<id>/`. L'interface de validation les compare côte à côte ; un clic
-sur « Approuver » copie la variante vers `public/images/` — ce qui active
-automatiquement la transition photo dans l'app (repli hologramme/matière sinon).
+## Architecture
 
-Fournisseurs (`RECON_FOURNISSEUR` ou `--fournisseur`, secrets dans `.env`
-non versionné) :
+- `app/` — écrans Expo Router : Saisie (`index`) → Résultat (`resultat`), Réglages (`reglages`).
+- `src/domaine/` — logique métier pure : calcul d'estimation (arithmétique entière, centimes), titres et puretés, monnaie. Aucune dépendance React Native : testable en Node.
+- `src/cours/` — abstraction `FournisseurCours` (MetalPriceProvider), implémentation metals.dev swappable, service de cache 15 min avec repli hors-ligne persisté.
+- `src/etat/` — stores Zustand (estimation en cours, réglages de marge persistés).
+- `src/composants/` — composants d'interface, dont le ticket d'estimation (élément signature).
+- `src/design/tokens.ts` — palette, typographies, espacements : aucune couleur en dur dans les écrans.
 
-| Fournisseur | Variable(s) | Notes |
-|---|---|---|
-| `bfl` | `BFL_API_KEY` | FLUX.1 Fill, API Black Forest Labs (Allemagne, UE) — recommandé |
-| `endpoint` | `RECON_ENDPOINT` (+ `RECON_API_KEY`) | serveur d'inpainting auto-hébergé (ex. SDXL sur Scaleway/OVH 🇫🇷) — contrat : POST JSON `{image, mask, prompt, seed}` en base64 → JPEG |
-| `simulation` | — | sans API : copies de l'original pour tester la mécanique |
+## État d'avancement
 
-## Stack
-
-- [Vite](https://vitejs.dev) — outillage et serveur de dev
-- [GSAP](https://gsap.com) — animations (timeline d'intro, lettres en cascade, formes flottantes)
-- [Capacitor](https://capacitorjs.com) — empaquetage natif iOS / Android
-- Vanilla JS + CSS
-
-## Animations
-
-La page d'accueil (`src/main.js`) utilise :
-
-- une **timeline GSAP** pour la séquence d'entrée (kicker → titre lettre par lettre → sous-titre → boutons → cartes → formes) ;
-- des animations **en boucle** (`repeat: -1`, `yoyo`) pour les formes décoratives ;
-- `gsap.matchMedia()` pour respecter **prefers-reduced-motion** (aucune animation si l'utilisateur préfère un mouvement réduit).
-
-## Skills GSAP
-
-Les skills officielles GSAP sont installées dans `.agents/skills/` (symlinks dans `.claude/skills/`) via :
-
-```bash
-npx skills add https://github.com/greensock/gsap-skills
-```
+- ✅ F1 — Estimation métal : saisie poids/titre, cours avec cache et mode hors-ligne, marge par métal (% ou €/g), ticket de résultat.
+- ⬜ F2 — Photo & assistance IA (edge function serveur, prompt versionné dans `/prompts`).
+- ⬜ F3 — Reçu PDF & livre de police (SQLite local-first, numérotation infalsifiable).
+- ⬜ F4 — Historique & tableau de bord.
