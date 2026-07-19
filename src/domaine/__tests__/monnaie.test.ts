@@ -55,3 +55,20 @@ describe('formatage', () => {
     expect(normaliser(formaterMilligrammes(1000))).toBe('1 g');
   });
 });
+
+describe('grammesCanoniques', () => {
+  it('produit un décimal canonique à point, sans séparateur de milliers', async () => {
+    const { grammesCanoniques } = await import('../monnaie');
+    expect(grammesCanoniques(12400)).toBe('12.4');
+    expect(grammesCanoniques(1)).toBe('0.001');
+    expect(grammesCanoniques(1000)).toBe('1');
+    expect(grammesCanoniques(10_000_000)).toBe('10000');
+    expect(grammesCanoniques(1_234_567)).toBe('1234.567');
+  });
+
+  it('refuse les valeurs non entières ou négatives', async () => {
+    const { grammesCanoniques } = await import('../monnaie');
+    expect(() => grammesCanoniques(-1)).toThrow('Poids invalide');
+    expect(() => grammesCanoniques(1.5)).toThrow('Poids invalide');
+  });
+});

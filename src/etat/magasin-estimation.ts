@@ -17,11 +17,14 @@ interface EtatEstimation {
   resultat: ResultatEstimation | null;
   /** Analyse IA associée à l'estimation en cours (jamais obligatoire). */
   analyse: AnalyseBijou | null;
+  /** Identifiant de l'estimation persistée en base (écran Résultat). */
+  estimationId: string | null;
   /** Numéro local du ticket (indicatif — le n° légal viendra du livre de police). */
   numeroTicket: number;
 
   definirPoids: (poids: string) => void;
   definirTitre: (code: CodeTitre) => void;
+  definirEstimationId: (id: string) => void;
   /**
    * Injecte une analyse IA dans la saisie : le titre suggéré par le poinçon
    * PRÉ-REMPLIT le champ sans jamais l'écraser s'il a déjà été choisi à la
@@ -39,10 +42,12 @@ export const utiliserEstimation = create<EtatEstimation>()((set, get) => ({
   coursUtilise: null,
   resultat: null,
   analyse: null,
+  estimationId: null,
   numeroTicket: 0,
 
   definirPoids: (poids) => set({ poids }),
   definirTitre: (code) => set({ codeTitre: code }),
+  definirEstimationId: (id) => set({ estimationId: id }),
 
   appliquerAnalyse: (analyse) =>
     set((etat) => ({
@@ -64,10 +69,17 @@ export const utiliserEstimation = create<EtatEstimation>()((set, get) => ({
       coursCentimesParGramme: cours.cours.centimesParGramme,
       marge,
     });
-    set({ resultat, coursUtilise: cours, numeroTicket: numeroTicket + 1 });
+    set({ resultat, coursUtilise: cours, numeroTicket: numeroTicket + 1, estimationId: null });
     return resultat;
   },
 
   recommencer: () =>
-    set({ poids: '', codeTitre: null, resultat: null, coursUtilise: null, analyse: null }),
+    set({
+      poids: '',
+      codeTitre: null,
+      resultat: null,
+      coursUtilise: null,
+      analyse: null,
+      estimationId: null,
+    }),
 }));
