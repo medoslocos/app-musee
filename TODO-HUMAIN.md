@@ -28,3 +28,14 @@
       démonstration (analyses fictives, clairement signalées dans l'UI).
 - [ ] Décision : faut-il exiger l'authentification Supabase sur la function
       (`--no-verify-jwt` ou non) ? Par défaut le JWT est vérifié.
+
+## F3 — Livre de police & chiffrement
+
+- [ ] Sur le web, la clé de chiffrement de l'identité vit dans `localStorage`
+      (acceptable en développement seulement). Décision : soit réserver le
+      livre de police aux plateformes natives (clé en coffre matériel via
+      expo-secure-store), soit brancher une clé dérivée d'une session
+      Supabase avant toute mise en production web.
+- [ ] Vérifier auprès du conseil juridique le libellé des mentions du reçu
+      (propriété, L112-6) et les colonnes exigées par la préfecture pour
+      l'export du livre de police.
