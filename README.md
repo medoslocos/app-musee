@@ -39,4 +39,4 @@ npm run typecheck  # TypeScript strict
 - ✅ F1 — Estimation métal : saisie poids/titre, cours avec cache et mode hors-ligne, marge par métal (% ou €/g), ticket de résultat.
 - ✅ F2 — Photo & assistance IA : caméra + galerie, carte d'analyse avec badges de confiance, alerte valeur, suggestion de titre par poinçon, edge function `analyse-bijou` (prompt versionné dans `/prompts`).
 - ✅ F3 — Reçu PDF & livre de police : rachat avec identité chiffrée, signature tactile, ligne de livre inaltérable (triggers + chaîne d'empreintes SHA-256), reçu PDF, export CSV, espèces bloquées (art. L112-6 CMF).
-- ⬜ F4 — Historique & tableau de bord.
+- ✅ F4 — Historique & tableau de bord : trois chiffres du mois (rachats €, grammes d'or, marge moyenne), liste filtrable par statut, recherche par date, client (identité déchiffrée en mémoire) et type.
