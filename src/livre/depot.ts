@@ -102,6 +102,113 @@ export class Depot {
     );
   }
 
+  /**
+   * Historique F4 : liste filtrée par statut et recherche libre.
+   * La recherche couvre la description/type d'objet, la date (AAAA-MM-JJ)
+   * et le nom du client (déchiffré en mémoire depuis le livre de police —
+   * jamais de nom en clair en base).
+   */
+  async listerEstimations(filtres: {
+    statut?: StatutEstimation | null;
+    texte?: string;
+  } = {}): Promise<EstimationEnregistree[]> {
+    const statut = filtres.statut ?? null;
+    const texte = (filtres.texte ?? '').trim();
+    const conditions: string[] = [];
+    const parametres: unknown[] = [];
+    if (statut !== null) {
+      conditions.push('statut = ?');
+      parametres.push(statut);
+    }
+    if (texte !== '') {
+      const idsParClient = await this.idsEstimationsParClient(texte);
+      const parId =
+        idsParClient.length > 0 ? ` OR id IN (${idsParClient.map(() => '?').join(',')})` : '';
+      conditions.push(
+        `(description_objet LIKE '%' || ? || '%' COLLATE NOCASE
+          OR substr(cree_le, 1, 10) LIKE '%' || ? || '%'${parId})`,
+      );
+      parametres.push(texte, texte, ...idsParClient);
+    }
+    const clauseWhere = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+    return this.dependances.base.lignes<EstimationEnregistree>(
+      `SELECT * FROM estimations ${clauseWhere} ORDER BY cree_le DESC LIMIT 500`,
+      parametres,
+    );
+  }
+
+  private async idsEstimationsParClient(texte: string): Promise<string[]> {
+    const lignes = await this.dependances.base.lignes<{
+      estimation_id: string;
+      identite_chiffree: string;
+    }>(`SELECT estimation_id, identite_chiffree FROM livre_police WHERE type_ligne = 'rachat'`);
+    const recherche = texte.toLocaleLowerCase('fr-FR');
+    const ids = new Set<string>();
+    for (const ligne of lignes) {
+      try {
+        const identite = dechiffrerIdentite(this.dependances.chiffreur, ligne.identite_chiffree);
+        if (identite.nom.toLocaleLowerCase('fr-FR').includes(recherche)) {
+          ids.add(ligne.estimation_id);
+        }
+      } catch {
+        // Ligne illisible (mauvaise clé) : on l'ignore pour la recherche.
+      }
+    }
+    return [...ids];
+  }
+
+  /**
+   * Tableau de bord F4 — trois chiffres, pas plus :
+   * rachats du mois (centimes), grammes d'or rachetés (milligrammes),
+   * marge moyenne (pour-mille, null si aucun rachat).
+   * Les lignes annulées ne comptent pas.
+   */
+  async statistiquesDuMois(moisIso: string): Promise<{
+    rachatsCentimes: number;
+    orMilligrammes: number;
+    margeMoyennePourMille: number | null;
+  }> {
+    const lignes = await this.dependances.base.lignes<{
+      prix_centimes: number;
+      metal: string;
+      poids_grammes: string;
+      marge_centimes: number;
+      valeur_fonte_centimes: number;
+    }>(
+      `SELECT lp.prix_centimes, e.metal, lp.poids_grammes, e.marge_centimes, e.valeur_fonte_centimes
+       FROM livre_police lp
+       JOIN estimations e ON e.id = lp.estimation_id
+       WHERE lp.type_ligne = 'rachat'
+         AND substr(lp.date_iso, 1, 7) = ?
+         AND NOT EXISTS (
+           SELECT 1 FROM livre_police annulation
+           WHERE annulation.type_ligne = 'annulation'
+             AND annulation.numero_annule = lp.numero
+         )`,
+      [moisIso],
+    );
+    let rachatsCentimes = 0;
+    let orMilligrammes = 0;
+    let sommeMargesPourMille = 0;
+    let nombreAvecFonte = 0;
+    for (const ligne of lignes) {
+      rachatsCentimes += ligne.prix_centimes;
+      if (ligne.metal === 'or') {
+        orMilligrammes += Math.round(Number(ligne.poids_grammes) * 1000);
+      }
+      if (ligne.valeur_fonte_centimes > 0) {
+        sommeMargesPourMille += (ligne.marge_centimes * 1000) / ligne.valeur_fonte_centimes;
+        nombreAvecFonte += 1;
+      }
+    }
+    return {
+      rachatsCentimes,
+      orMilligrammes,
+      margeMoyennePourMille:
+        nombreAvecFonte === 0 ? null : Math.round(sommeMargesPourMille / nombreAvecFonte),
+    };
+  }
+
   // ── Livre de police ────────────────────────────────────────────────────
 
   private async derniereEmpreinte(): Promise<string> {

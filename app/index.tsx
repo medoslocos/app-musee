@@ -110,11 +110,18 @@ export default function EcranSaisie(): React.JSX.Element {
           </View>
         )}
 
-        <Link href="/reglages" asChild>
-          <Pressable accessibilityRole="button" style={styles.lienReglages}>
-            <Text style={styles.texteLien}>Réglages des marges</Text>
-          </Pressable>
-        </Link>
+        <View style={styles.rangeeLiens}>
+          <Link href="/historique" asChild>
+            <Pressable accessibilityRole="button" style={styles.lienReglages}>
+              <Text style={styles.texteLien}>Aujourd’hui</Text>
+            </Pressable>
+          </Link>
+          <Link href="/reglages" asChild>
+            <Pressable accessibilityRole="button" style={styles.lienReglages}>
+              <Text style={styles.texteLien}>Réglages des marges</Text>
+            </Pressable>
+          </Link>
+        </View>
       </ScrollView>
 
       <View style={styles.piedDePage}>
@@ -216,10 +223,14 @@ const styles = StyleSheet.create({
     fontSize: tailles.corps,
     lineHeight: tailles.corps * 1.5,
   },
+  rangeeLiens: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: espaces.l,
+  },
   lienReglages: {
     minHeight: CIBLE_TACTILE_MIN,
     justifyContent: 'center',
-    marginTop: espaces.l,
   },
   texteLien: {
     color: couleurs.grisEtain,

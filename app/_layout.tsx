@@ -35,6 +35,7 @@ export default function DispositionRacine(): React.JSX.Element | null {
         }}
       >
         <Stack.Screen name="index" options={{ title: 'Nouvelle estimation' }} />
+        <Stack.Screen name="historique" options={{ title: 'Aujourd’hui' }} />
         <Stack.Screen name="resultat" options={{ title: 'Estimation', headerBackTitle: 'Saisie' }} />
         <Stack.Screen name="reglages" options={{ title: 'Réglages', presentation: 'modal' }} />
         <Stack.Screen name="rachat" options={{ title: 'Rachat', headerBackTitle: 'Estimation' }} />
