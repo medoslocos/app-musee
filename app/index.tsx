@@ -23,7 +23,7 @@ import { CIBLE_TACTILE_MIN, couleurs, espaces, polices, rayons, tailles } from '
  */
 export default function EcranSaisie(): React.JSX.Element {
   const routeur = useRouter();
-  const { poids, codeTitre, definirPoids, definirTitre, estimer } = utiliserEstimation();
+  const { poids, codeTitre, analyse, definirPoids, definirTitre, estimer } = utiliserEstimation();
   const margesParMetal = utiliserReglages((etat) => etat.margesParMetal);
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState<string | null>(null);
@@ -60,6 +60,22 @@ export default function EcranSaisie(): React.JSX.Element {
         <Text style={styles.invitation}>
           Poser le bijou sur la balance, saisir le poids et choisir le titre.
         </Text>
+
+        <Link href="/analyse" asChild>
+          <Pressable accessibilityRole="button" style={styles.boutonAnalyse}>
+            <Text style={styles.texteBoutonAnalyse}>Analyser en photo</Text>
+          </Pressable>
+        </Link>
+
+        {analyse !== null && (
+          <View style={styles.rappelAnalyse}>
+            <Text style={styles.texteRappelAnalyse}>
+              Analyse : {analyse.type_objet}
+              {analyse.matiere_probable !== null ? ` — ${analyse.matiere_probable}` : ''}
+              {analyse.poincon?.titre_suggere != null ? ' · titre pré-rempli, modifiable' : ''}
+            </Text>
+          </View>
+        )}
 
         <Text style={styles.etiquette}>Poids</Text>
         <View style={styles.champPoids}>
@@ -130,6 +146,33 @@ const styles = StyleSheet.create({
     fontSize: tailles.corps,
     lineHeight: tailles.corps * 1.5,
     marginBottom: espaces.l,
+  },
+  boutonAnalyse: {
+    minHeight: CIBLE_TACTILE_MIN + 8,
+    borderRadius: rayons.bouton,
+    borderWidth: 1.5,
+    borderColor: couleurs.noirEncre,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: espaces.l,
+  },
+  texteBoutonAnalyse: {
+    color: couleurs.noirEncre,
+    fontFamily: polices.corpsSemiBold,
+    fontSize: tailles.corps,
+  },
+  rappelAnalyse: {
+    borderRadius: rayons.bouton,
+    backgroundColor: couleurs.craieProfonde,
+    paddingHorizontal: espaces.m,
+    paddingVertical: espaces.s,
+    marginBottom: espaces.l,
+  },
+  texteRappelAnalyse: {
+    color: couleurs.grisEtain,
+    fontFamily: polices.corpsMedium,
+    fontSize: tailles.secondaire,
+    lineHeight: tailles.secondaire * 1.5,
   },
   etiquette: {
     color: couleurs.noirEncre,

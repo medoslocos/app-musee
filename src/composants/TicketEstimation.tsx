@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, Animated, Easing, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
+import { utiliserGlissement } from './utiliserGlissement';
 import type { ResultatEstimation } from '../domaine/calcul-estimation';
 import {
   formaterCentimes,
@@ -22,38 +23,11 @@ const NOMBRE_PERFORATIONS = 14;
  * l'utilisateur a demandé la réduction des animations.
  */
 export function TicketEstimation({ resultat, numeroTicket, heureCours }: Props): React.JSX.Element {
-  const translation = useRef(new Animated.Value(0)).current;
-  const [pret, setPret] = useState(false);
-
-  useEffect(() => {
-    let annule = false;
-    AccessibilityInfo.isReduceMotionEnabled().then((reduit) => {
-      if (annule) {
-        return;
-      }
-      if (reduit) {
-        translation.setValue(1);
-        setPret(true);
-        return;
-      }
-      setPret(true);
-      Animated.timing(translation, {
-        toValue: 1,
-        duration: 300,
-        easing: Easing.out(Easing.cubic),
-        useNativeDriver: true,
-      }).start();
-    });
-    return () => {
-      annule = true;
-    };
-  }, [translation]);
-
-  const glissement = translation.interpolate({ inputRange: [0, 1], outputRange: [48, 0] });
+  const { opacite, translation } = utiliserGlissement();
 
   return (
     <Animated.View
-      style={[styles.ticket, { opacity: pret ? translation : 0, transform: [{ translateY: glissement }] }]}
+      style={[styles.ticket, { opacity: opacite, transform: [{ translateY: translation }] }]}
     >
       <View style={styles.entete}>
         <Text style={styles.numero}>Estimation n° {String(numeroTicket).padStart(4, '0')}</Text>
