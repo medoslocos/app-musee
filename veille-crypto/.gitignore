@@ -1,0 +1,14 @@
+# Secrets & config locale
+.env
+config.yaml
+
+# Base d'historique / scans
+*.db
+*.db-journal
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
